@@ -1,0 +1,5 @@
+Name,Sample Type,Collection Date,Depth (m),Filter Diameter,Filter type,Prefilter,Filtration volume,Fraction of filter,Approx volume through filter fraction,Station,lat_degrees,lat_minutes,lat_hemisphere,lon_degrees,lon_minutes,lon_hemisphere,CTD_O2,CTD_Temperature (C),CTD_Salinity,Depth Notes
+JV-119,Metagenome-EnvironmentalMarine,02/03/2023,400.00,142mm,0.2um PC,10um (PC),60,0.25,15,MX2,18,8.526,N,106,18.977,W,0.9,9.16,34.6,OMZ Core
+JV-121,Metagenome-EnvironmentalMarine,03/03/2023,95.00,47mm,0.2um PES,2.7um (gff),8,1,8,MX2,18,11.087,N,106,17.095,W,0.8,13.9,34.7,secondary chlorophyll max
+JV-154,Metagenome-EnvironmentalMarine,06/03/2023,140.00,142mm,0.2um PC,10um (PC),26,0.5,13,MX2,18,11.08,N,106,17.121,W,0.9,12.9,38.8,"right below secondary dcm, likely location of nitrite maximum"
+JV-132,Metagenome-EnvironmentalMarine,05/03/2023,80.00,47mm,0.2um PES,2.7um (gff),8,1,8,MX2,18,8.102,N,106,17.982,W,1.9,14.8,34.71,transition zone from anoxic to oxic

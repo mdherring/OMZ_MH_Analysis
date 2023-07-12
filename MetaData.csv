@@ -1,0 +1,18 @@
+﻿Column Name,Description,Notes
+mobile_contig_name,virus name,
+mobile_contig_length (bp),length of virus in base pairs,
+mobile_contig_read_count,number of Hi-C reads aligning to the virus,
+mobile_contig_read_depth,Hi-C read coverage depth of the virus in the entire sample,
+mobile_contig_read_depth_in_this_cluster (reads/kbp),Hi-C read coverage depth of the virus in this MAG,only when the virus is linked to multiple MAGs
+cluster_name,host MAG name,
+cluster_length (bp),host MAG length,
+cluster_read_count (reads),number of Hi-C reads aligning to host MAG,
+cluster_read_depth (reads/kbp),Hi-C read coverage depth of the host MAG,
+intra_read_count (reads),number of Hi-C reads inter-linking contigs in the MAG,
+intra_linkage_density (reads/kbp^2),density of Hi-C reads inter-linking between the contigs in the MAG,this is the 'expected' linkage
+inter_read_count (reads),number of Hi-C reads linking the virus to the potential host MAG,
+raw_inter_linkage_density (reads/kbp^2),density of Hi-C inter-linking between the virus and the MAG,this is the 'actual' linkage
+raw_inter_vs_intra_ratio,ratio between the 'actual' and 'expected' Hi-C linkage,
+mobile_element_copies_per_cell,estimated number of copies of the virus in this MAG,
+adjusted_inter_connective_linkage_density (reads/kbp^2),density of Hi-C inter-linking between the viral contig and the MAG ,adjusted for the copy count
+adjusted_inter_vs_intra_ratio,ratio between the 'actual' and 'expected' Hi-C linkage,"adjusted for the copy count; if close to 1, then this is a real host"
