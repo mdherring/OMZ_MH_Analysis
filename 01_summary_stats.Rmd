@@ -238,5 +238,22 @@ p20 <- annotate_figure(p20, top = text_grob("adjusted_inter_connective_linkage_d
 p20
 ```
 
+## Investigating number of viral copies per cell
+
+```{r}
+ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(sample_depth))) +
+  geom_jitter(show.legend = FALSE) +
+  ggtitle('Viral Copies per Cell for Contigs and vMAGs Jitter Plot') +
+  xlab('Sample Depth') +
+  ylab('Viral Copies Per Cell') 
+```
+
+```{r}
+ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(sample_depth))) +
+  geom_boxplot(show.legend = FALSE) +
+  ggtitle('Viral Copies per Cell for Contigs and vMAGs Box Plot') +
+  xlab('Sample Depth') +
+  ylab('Viral Copies Per Cell') 
+```
 
 
