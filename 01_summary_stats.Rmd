@@ -11,17 +11,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document explores how many MAGs are connected to viral contigs/vMAGs and how to define strong vs weak linkages. Data is the original data files from google drive.
 
-## Load Packages
+## Load Packages and Data
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(readr)
 library(ggplot2)
 library(ggpubr)
-```
+library(dplyr)
 
-## Load data:
-
-```{r}
 jv119_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-119_874814_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
 jv121_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-121_874818_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
 jv132_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-132_874826_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
@@ -31,6 +28,70 @@ jv119_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OM
 jv121_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-121_874818_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
 jv132_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-132_874826_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
 jv154_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-154_874822_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
+```
+
+## Create a Data Frame with all 4 Samples
+
+Create the following columns in each data frame: 
+
+sample_name = the name of the sample
+
+virus_type = contig or vMAG
+
+sample_depth = the depth at which the sample was taken at
+
+Then rename each data frame's columns to match each other. Merge data frames together into a larger data frame called 'combo'.
+
+```{r}
+jv119_contigs$sample_name <- "JV119" # create sample_name column
+jv119_contigs$virus_type <- "contig" # create virus_type column
+jv119_contigs$sample_depth <- 119    # create sample_depth column
+
+jv119_vMAG$sample <- "JV119"
+jv119_vMAG$element <- "vMAG"
+jv119_vMAG$sample_depth <- 119
+
+jv121_contigs$sample <- "JV121"
+jv121_contigs$element <- "contig"
+jv121_contigs$sample_depth <- 121
+
+jv121_vMAG$sample <- "JV121"
+jv121_vMAG$element <- "vMAG"
+jv121_vMAG$sample_depth <- 121
+
+jv132_contigs$sample <- "JV132"
+jv132_contigs$element <- "contig"
+jv132_contigs$sample_depth <- 132
+
+jv132_vMAG$sample <- "JV132"
+jv132_vMAG$element <- "vMAG"
+jv132_vMAG$sample_depth <- 132
+
+jv154_contigs$sample <- "JV154"
+jv154_contigs$element <- "contig"
+jv154_contigs$sample_depth <- 154
+
+jv154_vMAG$sample <- "JV154"
+jv154_vMAG$element <- "vMAG"
+jv154_vMAG$sample_depth <- 154
+
+df_list <- list(jv119_contigs, jv119_vMAG, jv121_contigs, jv121_vMAG, jv132_contigs, jv132_vMAG, jv154_contigs, jv154_vMAG) # create a list of all of the data frames
+new_names <- c("virus_name", "virus_length", "virus_read_count", "virus_read_depth", "virus_read_depth_in_host", "host_name","host_length", "host_read_count", "host_read_depth", "intra_read_count", "intra_linkage_density", "inter_read_count", "raw_inter_linkage_density", "raw_inter_vs_intra_ratio", "viral_copies_per_cell", "adjusted_inter_linkage_density", "adjusted_inter_vs_intra_ratio", "sample", "element", "sample_depth") # create a list of the new column names
+
+for (i in seq_along(df_list)) {
+  colnames(df_list[[i]]) <- new_names
+} # for loop to rename the columns in all of the data frames
+
+jv119_contigs <- do.call(data.frame, df_list[[1]]) # extract data frame from the data frame list
+jv119_vMAG <- do.call(data.frame, df_list[[2]])
+jv121_contigs <- do.call(data.frame, df_list[[3]])
+jv121_vMAG <- do.call(data.frame, df_list[[4]])
+jv132_contigs <- do.call(data.frame, df_list[[5]])
+jv132_vMAG <- do.call(data.frame, df_list[[6]])
+jv154_contigs <- do.call(data.frame, df_list[[7]])
+jv154_vMAG <- do.call(data.frame, df_list[[8]])
+
+combo <- bind_rows(df_list[[1]], df_list[[2]], df_list[[3]], df_list[[4]], df_list[[5]], df_list[[6]], df_list[[7]], df_list[[8]]) # create a large data frame with all of the sample data frames combined
 ```
 
 ## How many MAGs are connected to viral contigs/vMAGs?
@@ -176,3 +237,6 @@ p20 <- ggarrange(p11, p12, p13, p14, ncol = 2, nrow = 2)
 p20 <- annotate_figure(p20, top = text_grob("adjusted_inter_connective_linkage_density vMAGs", face = "bold", size = 14))
 p20
 ```
+
+
+
