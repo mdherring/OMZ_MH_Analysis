@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This document explores how many MAGs are connected to viral contigs/vMAGs and how to define strong vs weak linkages. Data is the original data files from google drive.
+This document explores how many MAGs are connected to viral contigs/vMAGs and how to define strong vs weak linkages. Imported data is the original data files from google drive and the all_host_associations csv file from 01_all_host_association_script.
 
 ## Load Packages and Data
 
