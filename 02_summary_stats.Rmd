@@ -19,17 +19,26 @@ library(ggplot2)
 library(ggpubr)
 library(dplyr)
 
+# contigs
 jv119_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-119_874814_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
 jv121_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-121_874818_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
 jv132_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-132_874826_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
 jv154_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-154_874822_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
 
+# vMAGs
 jv119_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-119_874814_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
 jv121_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-121_874818_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
 jv132_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-132_874826_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
 jv154_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-154_874822_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
 
+# all contigs and vMAGs
 combo <-read.csv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv")
+
+# viral MAGs (total)
+jv119_viral_mag <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-119_874814_Viral_Files/viral_MAGs/viral_mags_summary.tsv")
+jv121_viral_mag <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-121_874818_Viral_Files/viral_MAGs/viral_mags_summary.tsv")
+jv132_viral_mag <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-132_874826_Viral_Files/viral_MAGs/viral_mags_summary.tsv")
+jv154_viral_mag <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-154_874822_Viral_Files/viral_MAGs/viral_mags_summary.tsv")
 ```
 
 ## How many MAGs are connected to viral contigs/vMAGs?
@@ -195,4 +204,27 @@ ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, co
   ylab('Viral Copies Per Cell') 
 ```
 
+## Stacked Bar Plot
+
+```{r}
+vMAGs <- subset(combo, virus_type == "vMAG")
+vMAGs_count <- vMAGs %>% count(sample_depth) %>% rename(count = n)
+vMAGs_count$group <- "vMAGs"
+
+sample_depth <- c(400,95,80,140)
+count <- c(nrow(jv119_viral_mag),nrow(jv121_viral_mag),nrow(jv132_vMAG),nrow(jv154_viral_mag))
+group <- c("viral_mag", "viral_mag", "viral_mag", "viral_mag")
+
+viral <- data.frame(sample_depth, count, group)
+
+bp_data <- bind_rows(viral,vMAGs_count)
+
+
+ggplot(bp_data, aes(x=as.factor(sample_depth), y=count, fill = group)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  ggtitle('Grouped Barplot of the Number of Associated vMAGs and the Total Number of viral MAGs') +
+  xlab('Sample Depth') +
+  ylab('Count') +
+  labs(fill=NULL)
+```
 
