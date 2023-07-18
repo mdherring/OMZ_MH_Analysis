@@ -61,4 +61,4 @@ for (i in seq_along(df_list)) {
 combo <- bind_rows(df_list[[1]], df_list[[2]], df_list[[3]], df_list[[4]], df_list[[5]], df_list[[6]], df_list[[7]], df_list[[8]]) # create a large data frame with all of the sample data frames combined
 
 # Write the CSV file
-#write.csv(combo,"~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv" )
+write.csv(combo,"~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv", row.names = FALSE )
