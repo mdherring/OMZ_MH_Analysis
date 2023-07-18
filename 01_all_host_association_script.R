@@ -37,14 +37,14 @@ jv154_contigs$element <- "contig"
 jv154_vMAG$element <- "vMAG"
 
 # Create sample_depth column for each data frame
-jv119_contigs$sample_depth <- 119
-jv119_vMAG$sample_depth <- 119 
-jv121_contigs$sample_depth <- 121
-jv121_vMAG$sample_depth <- 121
-jv132_contigs$sample_depth <- 132
-jv132_vMAG$sample_depth <- 132
-jv154_contigs$sample_depth <- 154
-jv154_vMAG$sample_depth <- 154
+jv119_contigs$sample_depth <- 400
+jv119_vMAG$sample_depth <- 400
+jv121_contigs$sample_depth <- 95
+jv121_vMAG$sample_depth <- 95
+jv132_contigs$sample_depth <- 80
+jv132_vMAG$sample_depth <- 80
+jv154_contigs$sample_depth <- 140
+jv154_vMAG$sample_depth <- 140
 
 # Create a list of all the data frames
 df_list <- list(jv119_contigs, jv119_vMAG, jv121_contigs, jv121_vMAG, jv132_contigs, jv132_vMAG, jv154_contigs, jv154_vMAG)
