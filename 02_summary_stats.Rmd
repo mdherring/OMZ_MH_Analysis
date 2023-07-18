@@ -179,11 +179,12 @@ p20
 ## Investigating number of viral copies per cell
 
 ```{r}
-ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(sample_depth))) +
-  geom_jitter(show.legend = FALSE) +
+ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(virus_type))) +
+  geom_jitter() +
   ggtitle('Viral Copies per Cell for Contigs and vMAGs Jitter Plot') +
   xlab('Sample Depth') +
-  ylab('Viral Copies Per Cell') 
+  ylab('Viral Copies Per Cell') +
+  labs(color=NULL)
 ```
 
 ```{r}
