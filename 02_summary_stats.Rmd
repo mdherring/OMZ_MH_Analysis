@@ -198,10 +198,11 @@ ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, co
 
 ```{r}
 ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(virus_type))) +
-  geom_boxplot(show.legend = FALSE) +
+  geom_boxplot() +
   ggtitle('Viral Copies per Cell for Contigs and vMAGs Box Plot') +
   xlab('Sample Depth') +
-  ylab('Viral Copies Per Cell') 
+  ylab('Viral Copies Per Cell') +
+  labs(color=NULL)
 ```
 
 ## Stacked Bar Plot
