@@ -1,5 +1,5 @@
 ---
-title: "OMZ Data Analysis"
+title: "02_summary_stats"
 author: "Melissa Herring"
 date: "2023-07-10"
 output: html_document
