@@ -1,0 +1,197 @@
+---
+title: "OMZ Data Analysis"
+author: "Melissa Herring"
+date: "2023-07-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document explores how many MAGs are connected to viral contigs/vMAGs and how to define strong vs weak linkages. Data is the original data files from google drive.
+
+## Load Packages and Data
+
+```{r message=FALSE, warning=FALSE}
+library(readr)
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+
+jv119_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-119_874814_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
+jv121_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-121_874818_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
+jv132_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-132_874826_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
+jv154_contigs <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-154_874822_Viral_Files/viral_hosts/viral_host_associations_filtered.tsv")
+
+jv119_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-119_874814_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
+jv121_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-121_874818_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
+jv132_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-132_874826_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
+jv154_vMAG <- read_tsv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/jv-154_874822_Viral_Files/vMag_hosts/vMAG_host_associations_filtered.tsv")
+
+combo <-read.csv("~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv")
+```
+
+## How many MAGs are connected to viral contigs/vMAGs?
+
+### How many per sample?
+
+Each row represents an association between a mobile element and a host.
+
+```{r}
+nrow(jv119_contigs) # jv119 contigs
+nrow(jv119_vMAG)    # jv119 vMAGs
+nrow(jv121_contigs) # jv121 contigs
+nrow(jv121_vMAG)    # jv121 vMAGs
+nrow(jv132_contigs) # jv132 contigs
+nrow(jv132_vMAG)    # jv132 vMAGs
+nrow(jv154_contigs) # jv154 contigs
+nrow(jv154_vMAG)    # jv154 vMAGs
+```
+jv119 = 90 contigs, 7 vMAGs
+
+jv121 = 77 contigs, 10 vMAGs
+
+jv132 = 81 contigs, 15 vMAGs
+
+jv154 = 47 contigs, 9 vMAGs
+
+### How many total?
+
+```{r}
+nrow(jv119_contigs) + nrow(jv121_contigs) + nrow(jv132_contigs)+ nrow(jv154_contigs) # contigs
+nrow(jv119_vMAG) + nrow(jv121_vMAG) + nrow(jv132_vMAG) + nrow(jv154_vMAG) # vMAGs
+```
+
+295 contigs and 41 vMAGs in total.
+
+## Can we differentiate between strong and weak connections?
+
+```{r}
+# Distribution of adjusted_inter_vs_intra_ratio Viral Contigs
+p1 <- ggplot(jv119_contigs, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV119") +
+  labs(x="", y="")
+
+p2 <- ggplot(jv121_contigs, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV121") +
+  labs(x="", y="")
+
+p3 <- ggplot(jv132_contigs, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV132") +
+  labs(x="", y="")
+
+p4 <- ggplot(jv154_contigs, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV154") +
+  labs(x="", y="")
+  
+
+p5 <- ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2)
+p5 <- annotate_figure(p5, top = text_grob("Distribution of adjusted_inter_vs_intra Viral Contigs", face = "bold", size = 14))
+p5
+```
+
+```{r}
+# Distribution of adjusted_inter_vs_intra_ratio vMAGs
+p6 <- ggplot(jv119_vMAG, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV119") +
+  labs(x="", y="")
+
+p7 <- ggplot(jv121_vMAG, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV121") +
+  labs(x="", y="")
+
+p8 <- ggplot(jv132_vMAG, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV132") +
+  labs(x="", y="")
+
+p9 <- ggplot(jv154_vMAG, aes(x=`adjusted_inter_vs_intra_ratio`)) + 
+  geom_histogram() +
+  ggtitle("JV154") + 
+  labs(x="", y="")
+
+p10 <- ggarrange(p6, p7, p8, p9, ncol = 2, nrow = 2)
+p10 <- annotate_figure(p10, top = text_grob("Distribution of adjusted_inter_vs_intra vMAGs", face = "bold", size = 14))
+p10
+```
+
+```{r}
+# Distribution of adjusted_inter_connective_linkage_density (reads/kbp^2) for Viral Contigs
+p11 <- ggplot(jv119_contigs, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV119") +
+  labs(x="", y="")
+
+p12 <- ggplot(jv121_contigs, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV121") +
+  labs(x="", y="")
+
+p13 <- ggplot(jv132_contigs, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV132") +
+  labs(x="", y="")
+
+p14 <- ggplot(jv154_contigs, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV154") +
+  labs(x="", y="")
+
+p15 <- ggarrange(p11, p12, p13, p14, ncol = 2, nrow = 2)
+p15 <- annotate_figure(p15, top = text_grob("adjusted_inter_connective_linkage_density Viral Contigs", face = "bold", size = 14))
+p15
+```
+
+```{r}
+# Distribution of adjusted_inter_connective_linkage_density (reads/kbp^2) vMAGs
+p16 <- ggplot(jv119_vMAG, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV119") +
+  labs(x="", y="")
+
+p17 <- ggplot(jv121_vMAG, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV121") +
+  labs(x="", y="")
+
+p18 <- ggplot(jv132_vMAG, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV132") +
+  labs(x="", y="")
+
+p19 <- ggplot(jv154_vMAG, aes(x=`adjusted_inter_connective_linkage_density (reads/kbp^2)`)) + 
+  geom_histogram() +
+  ggtitle("JV154") +
+  labs(x="", y="")
+
+p20 <- ggarrange(p11, p12, p13, p14, ncol = 2, nrow = 2)
+p20 <- annotate_figure(p20, top = text_grob("adjusted_inter_connective_linkage_density vMAGs", face = "bold", size = 14))
+p20
+```
+
+## Investigating number of viral copies per cell
+
+```{r}
+ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(sample_depth))) +
+  geom_jitter(show.legend = FALSE) +
+  ggtitle('Viral Copies per Cell for Contigs and vMAGs Jitter Plot') +
+  xlab('Sample Depth') +
+  ylab('Viral Copies Per Cell') 
+```
+
+```{r}
+ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(sample_depth))) +
+  geom_boxplot(show.legend = FALSE) +
+  ggtitle('Viral Copies per Cell for Contigs and vMAGs Box Plot') +
+  xlab('Sample Depth') +
+  ylab('Viral Copies Per Cell') 
+```
+
+
