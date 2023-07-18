@@ -197,7 +197,7 @@ ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, co
 ```
 
 ```{r}
-ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(sample_depth))) +
+ggplot(data = combo, aes(x= as.factor(sample_depth), y=viral_copies_per_cell, color=as.factor(virus_type))) +
   geom_boxplot(show.legend = FALSE) +
   ggtitle('Viral Copies per Cell for Contigs and vMAGs Box Plot') +
   xlab('Sample Depth') +
