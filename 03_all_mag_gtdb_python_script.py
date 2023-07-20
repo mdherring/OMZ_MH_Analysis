@@ -54,3 +54,5 @@ combo['order'] = combo['order'].str.replace('o__', '')
 combo['family'] = combo['family'].str.replace('f__', '')
 combo['genus'] = combo['genus'].str.replace('g__', '')
 combo['species'] = combo['species'].str.replace('s__', '')
+
+combo.to_csv('~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/mag_data/all_mag_gtdb.csv', index=False)
