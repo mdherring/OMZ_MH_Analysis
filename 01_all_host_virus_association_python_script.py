@@ -50,7 +50,7 @@ jv154_vMAG['virus_type'] = 'vMAG'
 # Create sample_depth column for each data frame
 
 jv119_contigs['sample_depth'] = 400
-jv119_vMAG['sample_depth' = 400
+jv119_vMAG['sample_depth'] = 400
 jv121_contigs['sample_depth'] = 95
 jv121_vMAG['sample_depth'] = 95
 jv132_contigs['sample_depth'] = 80
@@ -79,7 +79,10 @@ column_mapping_1 = {
     'raw_inter_vs_intra_ratio': 'raw_inter_vs_intra_ratio',
     'mobile_element_copies_per_cell': 'viral_copies_per_cell',
     'adjusted_inter_connective_linkage_density (reads/kbp^2)': 'adjusted_inter_linkage_density',
-    'adjusted_inter_vs_intra_ratio': 'adjusted_inter_vs_intra_ratio'
+    'adjusted_inter_vs_intra_ratio': 'adjusted_inter_vs_intra_ratio',
+    'sample_name':'sample_name',
+    'virus_type': 'virus type',
+    'sample_depth': 'sample_depth'
 }
 
 for df in df_list1:
@@ -104,7 +107,10 @@ column_mapping_2 = {
     'raw_inter_vs_intra_ratio': 'raw_inter_vs_intra_ratio',
     'mobile_element_copies_per_cell': 'viral_copies_per_cell',
     'adjusted_inter_connective_linkage_density (reads/kbp^2)': 'adjusted_inter_linkage_density',
-    'adjusted_inter_vs_intra_ratio': 'adjusted_inter_vs_intra_ratio'
+    'adjusted_inter_vs_intra_ratio': 'adjusted_inter_vs_intra_ratio',
+    'sample_name':'sample_name',
+    'virus_type': 'virus type',
+    'sample_depth': 'sample_depth'
 }
 
 for df in df_list2:
