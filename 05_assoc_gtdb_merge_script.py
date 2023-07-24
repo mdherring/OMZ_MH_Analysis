@@ -1,6 +1,6 @@
 # 05_assoc_gtdb_merge_script
 
-# This python script merges the MAG GTDB data with the host-virus associations. The resulting data frame consists of each host-virus association (rows) with all of the columns of the host-virus associations along with their phylogenic classifications.
+# This python script merges the MAG GTDB data with the host-virus associations. The resulting data frame consists of each host-virus association (rows) with all of the columns of the host-virus associations along with their phylogenic classifications. The data loaded is all_host_association.csv (created with 01 R script) and all_mag_gtdb.csv (created with 03 python script).
 
 # Load packages
 import pandas as pd
