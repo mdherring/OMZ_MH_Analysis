@@ -81,7 +81,7 @@ column_mapping_1 = {
     'adjusted_inter_connective_linkage_density (reads/kbp^2)': 'adjusted_inter_linkage_density',
     'adjusted_inter_vs_intra_ratio': 'adjusted_inter_vs_intra_ratio',
     'sample_name':'sample_name',
-    'virus_type': 'virus type',
+    'virus_type': 'virus_type',
     'sample_depth': 'sample_depth'
 }
 
@@ -109,7 +109,7 @@ column_mapping_2 = {
     'adjusted_inter_connective_linkage_density (reads/kbp^2)': 'adjusted_inter_linkage_density',
     'adjusted_inter_vs_intra_ratio': 'adjusted_inter_vs_intra_ratio',
     'sample_name':'sample_name',
-    'virus_type': 'virus type',
+    'virus_type': 'virus_type',
     'sample_depth': 'sample_depth'
 }
 
@@ -120,4 +120,4 @@ for df in df_list2:
 combo = pd.concat([jv119_contigs, jv121_contigs, jv132_contigs, jv154_contigs, jv119_vMAG, jv121_vMAG, jv132_vMAG, jv154_vMAG])
 
 # write csv
-#combo.to_csv('~/Documents/Bigelow/Virus_Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv', index=False)
+combo.to_csv('~/Documents/Bigelow/Virus_Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv', index=False)
