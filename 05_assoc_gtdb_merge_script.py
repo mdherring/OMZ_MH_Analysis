@@ -15,8 +15,8 @@ from collections import Counter
 import matplotlib.pyplot as plt
 
 # Load data
-associations = pd.read_csv('~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv')
-mags = jv154_bac = pd.read_csv('~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/mag_data/all_mag_gtdb.csv')
+associations = pd.read_csv('~/Documents/Bigelow/Virus_Project/OMZ_MH_Analysis/Data/proximeta_viral_files/all_host_associations.csv')
+mags = jv154_bac = pd.read_csv('~/Documents/Bigelow/Virus_Project/OMZ_MH_Analysis/Data/mag_data/all_mag_gtdb.csv')
 
 # rename MAGs user_genome column to match associations data frame
 mags.rename(columns={'user_genome':'host_name'}, inplace=True) 
@@ -28,4 +28,4 @@ combo = associations.merge(mags,how='left',on=["host_name","sample_name","sample
 combo = combo.fillna("NA")
 
 # write csv
-combo.to_csv('~/Documents/Bigelow- starting Sept 2022/Virus Project/OMZ_MH_Analysis/Data/all_associations_gtdb.csv', index=False)
+combo.to_csv('~/Documents/Bigelow/Virus_Project/OMZ_MH_Analysis/Data/all_associations_gtdb.csv', index=False)
