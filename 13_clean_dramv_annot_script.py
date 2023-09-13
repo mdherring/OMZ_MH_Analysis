@@ -61,10 +61,13 @@ def convert_na_to_float(df):
 # for loop: create database columns if they don't already exist and put NAs then convert NAs to float type for get_ann_text function, apply get_ann_text and assign_annot functions, create a file with only certain columns
 tsv_pattern = "/Users/melissaherring/Google Drive/My Drive/MH_project/dramv/*/annotations.tsv"  # Replace with your file pattern
 tsv_file_paths = glob.glob(tsv_pattern)
-columns_to_keep = ['fasta', 'rank', 'kegg_hit', 'viral_hit', 'pfam_hits', 'vogdb_hits','annotation','annotation_source','amg_flags']
+columns_to_keep = ['fasta', 'annotation','annotation_source','amg_flags','V', 'M', 'A', 'P', 'E', 'K', 'T', 'F', 'B']
 num_columns_list = []
+
+
 for file_path in tsv_file_paths:
     df = pd.read_csv(file_path, delimiter='\t')
+    
     if 'kegg_hit' not in df.columns:
         df.insert(loc=len(df.columns), column='kegg_hit', value=pd.NA)
     if 'viral_hit' not in df.columns:
@@ -72,15 +75,35 @@ for file_path in tsv_file_paths:
     if 'pfam_hits' not in df.columns:
         df.insert(loc=len(df.columns), column='pfam_hits', value=pd.NA)
     if 'vogdb_hits' not in df.columns:
-        df.insert(loc=len(df.columns), column='vogdb_hits', value=pd.NA)    
-    convert_na_to_float(df)  
+        df.insert(loc=len(df.columns), column='vogdb_hits', value=pd.NA)
+        
+    convert_na_to_float(df)
+            
     df['viral_ann_text'] = df['viral_hit'].apply(get_ann_text, args = ('viral_hit',))
     df['kegg_ann_text'] = df['kegg_hit'].apply(get_ann_text, args = ('kegg_hit',)) 
     df['pfam_ann_text'] = df['pfam_hits'].apply(get_ann_text, args = ('pfam_hits',)) 
     df['vogdb_ann_text'] = df['vogdb_hits'].apply(get_ann_text, args = ('vogdb_hits',))
+    
     df[['annotation','annotation_source']] = df.apply(assign_annot, axis=1, result_type='expand')
-    df_name = df.iloc[0, 1]
+    
+    df = df.applymap(str)
+
+    new_column_names = list(['V', 'M', 'A', 'P', 'E', 'K', 'T', 'F', 'B'])
+
+    flag_columns = defaultdict(lambda: [])
+
+    for i in new_column_names:
+        for flag in df['amg_flags']:
+            
+            if i in flag:
+                flag_columns[i].append(1)
+            else:
+                flag_columns[i].append(0)
+
+    newdf = pd.concat([df, pd.DataFrame(flag_columns)], axis = 1)
+    
+    newdf_name = newdf.iloc[0, 1]
     dir_path = '/Users/melissaherring/Google Drive/My Drive/MH_project/dramv_trim/'
-    file_name = f"{df_name}.csv"
+    file_name = f"{newdf_name}.csv"
     full_path = dir_path + file_name
-    df[columns_to_keep].to_csv(full_path, index = False)
+    newdf[columns_to_keep].to_csv(full_path, index = False)
