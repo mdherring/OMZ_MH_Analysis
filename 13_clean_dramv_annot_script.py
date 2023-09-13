@@ -61,7 +61,7 @@ def convert_na_to_float(df):
 # for loop: create database columns if they don't already exist and put NAs then convert NAs to float type for get_ann_text function, apply get_ann_text and assign_annot functions, create a file with only certain columns
 tsv_pattern = "/Users/melissaherring/Google Drive/My Drive/MH_project/dramv/*/annotations.tsv"  # Replace with your file pattern
 tsv_file_paths = glob.glob(tsv_pattern)
-columns_to_keep = ['Unnamed: 0', 'rank', 'kegg_hit', 'viral_hit', 'pfam_hits', 'vogdb_hits','annotation','annotation_source']
+columns_to_keep = ['Unnamed: 0', 'rank', 'kegg_hit', 'viral_hit', 'pfam_hits', 'vogdb_hits','annotation','annotation_source','amg_flags']
 num_columns_list = []
 for file_path in tsv_file_paths:
     df = pd.read_csv(file_path, delimiter='\t')
